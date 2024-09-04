@@ -1,9 +1,12 @@
 /**
  * @type {import('next').NextConfig}
  */
+
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
     output: 'export',
-   
+    basePath: isProd ? '/clown-test': '' ,
     // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
     // trailingSlash: true,
    
