@@ -16,15 +16,22 @@ const initFormData = {
     description: ""
 }
 
-const StyledInput = styled("input")(
+const WrapBox = styled(Box)(
     {
-        display: "none"
+        marginTop:"10px",
+        marginBottom: "10px",
+        width:"100%"
     }
 );
 
+const StyledTextField = styled(TextField)({
+    width: "100%"
+})
 
 
 export default function RightArea(){
+
+    const [submitted,setSubmited] = useState(false);
     const [imageurl,setImageurl] = useState("");
     const [formData, setFormData] = useState({...initFormData});
     const dispacth = useAppDispatch();
@@ -72,11 +79,12 @@ export default function RightArea(){
 
     return (
         <Box flex={6} p={2} display="flex" justifyContent="center" sx={{ maxWidth:"50%"}}>      
-            <Card sx={{minWidth:"400px",maxWidth:"600px"}}>
+            <Card sx={{minWidth:"400px",maxWidth:"600px",maxHeight:"600px"}}>
                 <CardContent>
-                    <Typography variant="h5" > Clown Registration </Typography>
+                    <WrapBox><Typography variant="h5" > Clown Registration </Typography></WrapBox>
+                    
                     <FormBox component="form" onSubmit={handleSubmit} >
-                        
+                        <WrapBox>
                             { formData.imgpath.length === 0 && <Button variant="contained" component="span">
                                 Select Image
                                 <input
@@ -99,26 +107,26 @@ export default function RightArea(){
                                 src={formData.imgpath}
                                 onClick={handleImageClick}
                             />}
-                        <TextField
-                                label="Name"
-                                name="name"
-                                value={formData.name}
+                        </WrapBox>
+
+                        <WrapBox>
+                            <StyledTextField label="Name" name="name" value={formData.name} onChange={handleChange} required/>
+                        </WrapBox>
+                        <WrapBox >
+                            <StyledTextField
+                                label="Description"
+                                name="description"
+                                multiline
+                                rows={3}
+                                value={formData.description}
                                 onChange={handleChange}
                                 required
-                        />
-
-                        <TextField
-                            label="Description"
-                            name="description"
-                            multiline
-                            rows={3}
-                            value={formData.description}
-                            onChange={handleChange}
-                            required
-                        />
+                            />
+                        </WrapBox>
                         <Button variant="contained" color="primary" type="submit" >
                             Submit
                         </Button>
+                        {imageurl ? "":<Typography color="red" variant="caption"> one pic pls </Typography>}
                     </FormBox>
                 </CardContent>
             </Card>

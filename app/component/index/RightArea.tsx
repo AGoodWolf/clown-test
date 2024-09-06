@@ -1,7 +1,6 @@
 import { Box, Button, Card, CardActions, CardContent, CardMedia, styled, Typography } from "@mui/material";
-import { useAppSelector } from "@/lib/hooks";
-
-
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { clownDeleted } from"@/lib/features/clowns/clownSlice"
 
 const CardBox = styled(Box)({
     display: "flex",
@@ -14,15 +13,22 @@ const StyledCard = styled(Card)({
     margin: "10px",
     maxWidth:"30%",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1) ",
-    transition: "transform 0.3s",
-    "&:hover":{
-        transform:"translateY(-5px)"
-    }
+    // transition: "transform 0.3s",
+    // "&:hover":{
+    //     transform:"translateY(-5px)"
+    // }
 });
 
 
 const RowCards = ( )=>{
     const clownsList =  useAppSelector( (state)  => state.clowns.clownsList);
+    const dispacth = useAppDispatch ();
+
+    const handleDeleteClick = (e : React.MouseEvent<HTMLButtonElement>)=>{
+        console.log(e.target);
+        dispacth(clownDeleted(e.target.key as number));
+    }
+
     return(
         <CardBox >
             {clownsList.map( (v,i )=>{
@@ -39,7 +45,7 @@ const RowCards = ( )=>{
                     </CardContent>
                     <CardActions>
                         <Button size="small"> remodify </Button>
-                        <Button size="small"> delete </Button>
+                        <Button size="small" key={i} onClick={handleDeleteClick}> delete </Button>
                     </CardActions>
                 </StyledCard> 
                 );} )

@@ -37,7 +37,7 @@ export  const clownsSlice = createSlice({
             state.clownsList.push(action.payload);
         },
         clownDeleted(state,action: PayloadAction<number>){
-            delete state.clownsList[action.payload];
+            state.clownsList.splice(action.payload,1);
         }
     }
 }) 
